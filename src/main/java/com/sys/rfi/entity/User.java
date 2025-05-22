@@ -1,4 +1,6 @@
-package com.sys.rfi.model;
+package com.sys.rfi.entity;
+
+import com.sys.rfi.constants.Role;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
