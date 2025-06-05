@@ -21,7 +21,7 @@
 		<div class="login-logo">
 			<img src="/images/MRVC.webp" alt="" width="250" height="250">
 		</div>
-		<h2>Login</h2>
+		<h2 id="loginHeading">Login</h2>
 		        <form class="col s12 m3" id="loginForm" name="loginForm" method="post" >
 			<label>Username: </label>
 			<div class="form-fields">
@@ -54,6 +54,21 @@
 		</div>
 	</form>
   </div>
+  <div id="newPasswordSection" style="display:none;">
+
+  <form>
+    <div class="form-fields">
+      <input type="password" id="newPassword" placeholder="Enter new password" required>
+    </div>
+    <div class="form-fields">
+      <input type="password" id="confirmPassword" placeholder="Confirm new password" required>
+    </div>
+    <div class="d-flex">
+      <button type="button" class="btn btn-red" onclick="submitNewPassword()">Submit</button>
+      <button type="button" class="btn btn-white" onclick="cancelForgotPassword()" style="margin-left: 10px;">Cancel</button>
+    </div>
+  </form>
+</div>
 </div>
 
 <!-- OTP Popup -->
@@ -69,11 +84,25 @@
   </div>
 </div>
 
+<!-- Add this inside your body after OTP popup -->
+
+
+
 <script>
   function showForgotPassword() {
     document.getElementById('loginForm').style.display = 'none';
     document.querySelector('.forgot-password').style.display = 'none';
     document.getElementById('forgotPasswordSection').style.display = 'block';
+    document.querySelector('h2').innerText = 'Forgot Password';
+  }
+
+  function cancelForgotPassword() {
+    document.getElementById('forgotPasswordSection').style.display = 'none';
+    document.getElementById('newPasswordSection').style.display = 'none';
+    document.getElementById('otpPopup').style.display = 'none';
+    document.getElementById('loginForm').style.display = 'flex';
+    document.querySelector('.forgot-password').style.display = 'block';
+    document.querySelector('h2').innerText = 'Login';
   }
 
   function openOtpPopup() {
@@ -90,21 +119,53 @@
   }
 
   function submitOtp() {
-    const otp = document.getElementById('otpField').value;
-    if (!otp) {
-      alert("Please enter the OTP.");
-    } else {
-      alert("OTP submitted: " + otp);
-      closeOtpPopup();
-    }
+  const otp = document.getElementById('otpField').value;
+  if (!otp) {
+    alert("Please enter the OTP.");
+    return;
   }
 
-  function cancelForgotPassword() {
+  // Simulate OTP validation
+  alert("OTP verified. You may now set a new password.");
+  closeOtpPopup();
+
+  // Hide other sections to avoid overlap
   document.getElementById('forgotPasswordSection').style.display = 'none';
-  document.getElementById('loginForm').style.display = 'flex';
-  document.querySelector('.forgot-password').style.display = 'block';
+  document.getElementById('loginForm').style.display = 'none';
+  document.querySelector('.forgot-password').style.display = 'none';
+
+  // Show new password form
+  document.getElementById('newPasswordSection').style.display = 'block';
+
+  // 🔧 Update the heading to 'Set New Password'
+  const heading = document.querySelector('h2');
+  if (heading) {
+    heading.innerText = 'Set New Password';
+  }
 }
+
+
+
+  function submitNewPassword() {
+    const newPassword = document.getElementById('newPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+
+    if (!newPassword || !confirmPassword) {
+      alert("Both password fields are required.");
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
+
+    // Simulate password change success
+    alert("Password successfully changed. Please log in.");
+    cancelForgotPassword();
+  }
 </script>
+
 
 </body>
 </html>
